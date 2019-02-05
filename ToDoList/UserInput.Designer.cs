@@ -70,6 +70,7 @@
             this.Controls.Add(this.txtbxList);
             this.Name = "UserInput";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserInput_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
