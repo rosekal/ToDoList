@@ -29,10 +29,7 @@ namespace ToDoList
 
             int y = 20;
             int x = 10;
-            foreach (var item in toDoList)
-            {
-                Debug.WriteLine("test");
-                Debug.WriteLine(item);
+            foreach (var item in toDoList){
                 CheckBox check = new CheckBox
                 {
                     Text = item,
