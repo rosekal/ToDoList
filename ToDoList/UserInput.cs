@@ -1,25 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 using System.IO;
-using System.Threading;
 
 namespace ToDoList
 {
     public partial class UserInput : Form{
-        List<string> toDoList = new List<string>();
-        FileManager fm;
+        private List<string> toDoList = new List<string>();
+        private FileManager fm;
+
+        private string AppName = ConfigurationManager.AppSettings["AppName"];
 
         public UserInput(){
             InitializeComponent();
-
+            this.Text = AppName;
             fm = new FileManager();
 
             //Restore backup file so it writes to the txt box on opening form
@@ -62,6 +57,7 @@ namespace ToDoList
             };
 
             if (saveFile.ShowDialog() == DialogResult.OK) {
+                this.Text = $"{Path.GetFileName(saveFile.FileName)} - {AppName}";
                 fm.WriteToFile(saveFile.FileName, txtbxList.Text);
             }
         }
@@ -74,6 +70,7 @@ namespace ToDoList
             };
 
             if (openFile.ShowDialog() == DialogResult.OK) {
+                this.Text = $"{Path.GetFileName(openFile.FileName)} - {AppName}";
                 txtbxList.Text = fm.ReadFromFile(openFile.FileName);
             }
         }
