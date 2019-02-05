@@ -33,7 +33,7 @@
             // 
             // gbxList
             // 
-            this.gbxList.Location = new System.Drawing.Point(27, 12);
+            this.gbxList.Location = new System.Drawing.Point(27, 27);
             this.gbxList.Name = "gbxList";
             this.gbxList.Size = new System.Drawing.Size(431, 264);
             this.gbxList.TabIndex = 0;
