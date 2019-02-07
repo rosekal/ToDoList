@@ -35,7 +35,7 @@ namespace ToDoList {
         internal void BackUpFile(List<Task> data) {
             ValidateBackupFile();
 
-            //Writing to the backup file.
+            //Writing to the backup file
             WriteToFile(BACKUP_DIRECTORY + BACKUP_FILE, data);
         }
 
