@@ -27,20 +27,33 @@ namespace ToDoList
 
             PopulateToDoList();
 
+            Console.WriteLine(y);
             CheckBox chkbx = new CheckBox() {
-                Location = new Point(x, y)
-            };
-
-            txbx = new TextBox() {
-                Location = new Point(x + 20, y),
-                
+                Checked = true,
+                Location = new Point(x, y),
+                AutoSize = true
             };
 
             gbxList.Controls.Add(chkbx);
+
+
+            txbx = new TextBox() {
+                Location = new Point(x + 20, y - chkbx.Height / 4),
+                Width = 200
+            };
+
+            txbx.TextChanged += new EventHandler(txbx_TextChanged);
             gbxList.Controls.Add(txbx);
 
             //Backup to the file every 5 minutes
             var t = new System.Threading.Timer(o => fm.BackUpFile(toDoList), null, 10000, 10000);
+        }
+
+        private void txbx_TextChanged(object sender, EventArgs e) {
+            Size size = TextRenderer.MeasureText(txbx.Text, txbx.Font);
+            if (size.Width > txbx.Width && (size.Width + 40) < gbxList.Width ) {
+                txbx.Width = size.Width;
+            }
         }
 
         private void UpdateList(string text) {
@@ -103,7 +116,8 @@ namespace ToDoList
 
                 gbxList.Controls.Add(check);
                 this.Height = 500;
-                y += 20;
+
+                y += 30;
             }
         }
     }

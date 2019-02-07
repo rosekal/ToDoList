@@ -12,8 +12,6 @@ namespace ToDoList {
         private readonly string BACKUP_DIRECTORY = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\KalenGitHub\ToDoList\";
         private readonly string BACKUP_FILE = "backup.tdl";
 
-        private readonly string XML_HEADER = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-
         internal List<Task> RestoreBackup() {
             ValidateBackupFile();
 
@@ -42,14 +40,11 @@ namespace ToDoList {
 
         internal void WriteToFile(string path, List<Task> data) {
             using (StreamWriter sw = new StreamWriter(path)) {
-                sw.WriteLine(XML_HEADER);
-
                 sw.WriteLine("<Tasks>");
 
                 foreach(Task task in data) {
-                    sw.WriteLine("\t<Task>");
+                    sw.WriteLine($"\t<Task id=\"{task.Id}\">");
 
-                    sw.WriteLine($"\t\t<ID>{task.Id}</ID>");
                     sw.WriteLine($"\t\t<Name>{task.Name}</Name>");
                     sw.WriteLine($"\t\t<Completed>{task.Completed}</Completed>");
 
