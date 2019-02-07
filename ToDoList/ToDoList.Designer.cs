@@ -39,6 +39,7 @@
             this.gbxList.TabIndex = 0;
             this.gbxList.TabStop = false;
             this.gbxList.Text = "To Do";
+            this.gbxList.Enter += new System.EventHandler(this.gbxList_Enter);
             // 
             // ToDoList
             // 
