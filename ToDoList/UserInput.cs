@@ -27,7 +27,7 @@ namespace ToDoList
 
             PopulateToDoList();
 
-            Console.WriteLine(y);
+            //Create dull checkbox
             CheckBox chkbx = new CheckBox() {
                 Checked = true,
                 Location = new Point(x, y),
@@ -36,7 +36,7 @@ namespace ToDoList
 
             gbxList.Controls.Add(chkbx);
 
-
+            //Create textbox for user input
             txbx = new TextBox() {
                 Location = new Point(x + 20, y - chkbx.Height / 4),
                 Width = 200
@@ -44,6 +44,16 @@ namespace ToDoList
 
             txbx.TextChanged += new EventHandler(txbx_TextChanged);
             gbxList.Controls.Add(txbx);
+
+            //Create button to add the user's task
+            Button button = new Button() {
+                Text = "Create",
+                Location = new Point(x + 20, y + 20)
+            };
+
+            button.Click += new EventHandler(btnCreate_Click);
+
+            gbxList.Controls.Add(button);
 
             //Backup to the file every 5 minutes
             var t = new System.Threading.Timer(o => fm.BackUpFile(toDoList), null, 10000, 10000);
@@ -61,10 +71,10 @@ namespace ToDoList
         }
 
         private void btnCreate_Click(object sender, EventArgs e){
-            fm.BackUpFile(toDoList);
-
             //Add new item to the list
             toDoList.Add(new Task(Task.CreateId(), txbx.Text, false));
+
+            fm.BackUpFile(toDoList);
         }
 
         private void UserInput_FormClosing(object sender, FormClosingEventArgs e) {

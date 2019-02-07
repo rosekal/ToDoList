@@ -23,14 +23,14 @@ namespace ToDoList {
         public static string CreateId() {
             char[] alphaNumeric = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890".ToCharArray();
 
-            char[] code = new char[10];
+            string code = "";
+            Random r = new Random();
 
-            for(int i = 0; i < code.Length; i++) {
-                Random r = new Random();
-                code[i] = alphaNumeric[r.Next(0, alphaNumeric.Length-1)];
+            for (int i = 0; i < 10; i++) {
+                code += alphaNumeric[r.Next(0, alphaNumeric.Length-1)];
             }
 
-            return code.ToString();
+            return code;
         }
     }
 }
