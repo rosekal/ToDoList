@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace ToDoList {
@@ -42,7 +43,7 @@ namespace ToDoList {
             using (StreamWriter sw = new StreamWriter(path)) {
                 sw.WriteLine("<Tasks>");
 
-                foreach(Task task in data) {
+                foreach (Task task in data) {
                     sw.WriteLine($"\t<Task id=\"{task.Id}\">");
 
                     sw.WriteLine($"\t\t<Name>{task.Name}</Name>");
@@ -57,19 +58,27 @@ namespace ToDoList {
 
         internal List<Task> ReadFromFile(string path) {
             XmlDocument doc = new XmlDocument();
-            doc.Load(path);
+
+            try {
+                doc.Load(path);
+            } catch (XmlException) {
+                MessageBox.Show("There is something wrong with the TDL file.  Please try another one.", "Open TDL Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return null;
+            }
 
             List<Task> tasks = new List<Task>();
 
-            foreach(XmlNode node in doc.DocumentElement) {
+            foreach (XmlNode node in doc.DocumentElement) {
                 string id = node.Attributes[0].InnerText;
 
                 string name = null;
                 bool completed = false;
-                foreach(XmlNode subnode in node.ChildNodes) {
+                foreach (XmlNode subnode in node.ChildNodes) {
                     if (subnode.Name == "Name") {
                         name = subnode.InnerText;
-                    }else if(subnode.Name == "Completed") {
+                    } else if (subnode.Name == "Completed") {
                         completed = Boolean.Parse(subnode.InnerText);
                     }
                 }
