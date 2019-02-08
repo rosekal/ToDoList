@@ -13,6 +13,7 @@ namespace ToDoList {
         private TextBox txbx;
         private CheckBox chkbx;
         private Button btn;
+        //private VScrollBar scroll;
 
         private string currFile = "";
 
@@ -38,39 +39,9 @@ namespace ToDoList {
             var t = new System.Threading.Timer(o => fm.BackUpFile(toDoList), null, 10000, 10000);
         }
 
-        private void CreateInputWidgets() {
-            //Create dull checkbox
-            chkbx = new CheckBox() {
-                Checked = false,
-                Enabled = false,
-                AutoSize = true
-            };
-
-            gbxList.Controls.Add(chkbx);
-
-            //Create textbox for user input
-            txbx = new TextBox() {
-                Width = 200
-            };
-
-            txbx.TextChanged += new EventHandler(txbx_TextChanged);
-            gbxList.Controls.Add(txbx);
-
-            //Create button to add the user's task
-            btn = new Button() {
-                Text = "Create",
-            };
-
-            btn.Click += new EventHandler(btnCreate_Click);
-
-            gbxList.Controls.Add(btn);
-
-            PositionInputWidgets();
-        }
-
         private void txbx_TextChanged(object sender, EventArgs e) {
             Size size = TextRenderer.MeasureText(txbx.Text, txbx.Font);
-            if (size.Width > txbx.Width && (size.Width + 40) < gbxList.Width) {
+            if (size.Width > txbx.Width && (size.Width + 40) < mainPanel.Width) {
                 txbx.Width = size.Width;
             }
         }
@@ -111,11 +82,50 @@ namespace ToDoList {
             }
         }
 
+        private void CreateInputWidgets() {
+            //Create dull checkbox
+            chkbx = new CheckBox() {
+                Checked = false,
+                Enabled = false,
+                AutoSize = true
+            };
+
+            mainPanel.Controls.Add(chkbx);
+
+            //Create textbox for user input
+            txbx = new TextBox() {
+                Width = 200
+            };
+
+            txbx.TextChanged += new EventHandler(txbx_TextChanged);
+            mainPanel.Controls.Add(txbx);
+
+            //Create button to add the user's task
+            btn = new Button() {
+                Text = "Create",
+            };
+
+            btn.Click += new EventHandler(btnCreate_Click);
+
+            mainPanel.Controls.Add(btn);
+
+
+            /*scroll = new VScrollBar {
+                Dock = DockStyle.Right,
+                Enabled = false
+            };
+
+            scroll.Scroll += (sender, e) => { mainPanel.VerticalScroll.Value = scroll.Value; };
+            mainPanel.Controls.Add(scroll);*/
+
+            PositionInputWidgets();
+        }
+
         private void PopulateToDoList() {
             x = 10;
             y = 20;
 
-            gbxList.Controls.Clear();
+            mainPanel.Controls.Clear();
             CreateInputWidgets();
             foreach (Task task in toDoList) {
                 CheckBox check = new CheckBox {
@@ -128,12 +138,15 @@ namespace ToDoList {
 
                 check.CheckStateChanged += new EventHandler(chkbx_CheckStateChanged);
 
-                if (gbxList.Height < check.Location.Y + 70) {
+                if(mainPanel.Height > 350) {
+                    //scroll.Enabled = true;
+                } else if (mainPanel.Height < check.Location.Y + 70) {
+                    //scroll.Enabled = false;
+                    mainPanel.Height += 30;
                     gbxList.Height += 30;
                 }
 
-                gbxList.Controls.Add(check);
-                this.Height = 500;
+                mainPanel.Controls.Add(check);
 
                 y += 30;
             }
@@ -176,7 +189,7 @@ namespace ToDoList {
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e) {
             toDoList.Clear();
-            gbxList.Controls.Clear();
+            mainPanel.Controls.Clear();
             CreateInputWidgets();
 
             currFile = "";
@@ -186,6 +199,8 @@ namespace ToDoList {
             chkbx.Location = new Point(x, y);
             txbx.Location = new Point(x + 20, y - chkbx.Height / 4);
             btn.Location = new Point(x + 20, y + 20);
+
+            mainPanel.AutoScrollPosition = new Point(0, mainPanel.VerticalScroll.Maximum);
         }
     }
 }

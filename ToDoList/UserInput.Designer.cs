@@ -37,7 +37,9 @@
             this.aboutToDoListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbxList = new System.Windows.Forms.GroupBox();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
+            this.gbxList.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -99,9 +101,10 @@
             // 
             // gbxList
             // 
+            this.gbxList.Controls.Add(this.mainPanel);
             this.gbxList.Location = new System.Drawing.Point(12, 27);
             this.gbxList.Name = "gbxList";
-            this.gbxList.Size = new System.Drawing.Size(431, 264);
+            this.gbxList.Size = new System.Drawing.Size(431, 101);
             this.gbxList.TabIndex = 6;
             this.gbxList.TabStop = false;
             this.gbxList.Text = "To Do";
@@ -113,11 +116,19 @@
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
+            // mainPanel
+            // 
+            this.mainPanel.AutoScroll = true;
+            this.mainPanel.Location = new System.Drawing.Point(6, 19);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(419, 63);
+            this.mainPanel.TabIndex = 0;
+            // 
             // UserInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(454, 292);
+            this.ClientSize = new System.Drawing.Size(454, 462);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.gbxList);
             this.MainMenuStrip = this.menuStrip1;
@@ -126,6 +137,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserInput_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.gbxList.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,6 +153,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToDoListToolStripMenuItem;
         private System.Windows.Forms.GroupBox gbxList;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.Panel mainPanel;
     }
 }
 
