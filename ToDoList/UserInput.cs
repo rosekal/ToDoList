@@ -53,6 +53,11 @@ namespace ToDoList {
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return;
+            }else if(txbx.Text.Length > 250) {
+                MessageBox.Show("Task cannot be more than 250 characters.  Please shorten the task.", "Task Creation Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
             }
 
             //Add new item to the list

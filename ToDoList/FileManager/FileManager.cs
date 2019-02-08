@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
@@ -28,7 +29,19 @@ namespace ToDoList {
 
             //If the backup file doesn't exist, create one.
             if (!File.Exists(BACKUP_DIRECTORY + BACKUP_FILE)) {
-                File.Create(BACKUP_DIRECTORY + BACKUP_FILE);
+                File.Create(BACKUP_DIRECTORY + BACKUP_FILE).Close();
+            }
+
+            //If backup file is corrupted/new, re-write it
+            XmlDocument doc = new XmlDocument();
+
+            try {
+                doc.Load(BACKUP_DIRECTORY + BACKUP_FILE);
+            } catch (XmlException) {
+                using (StreamWriter sw = new StreamWriter(BACKUP_DIRECTORY + BACKUP_FILE)) {
+                    sw.WriteLine("<Tasks>");
+                    sw.WriteLine("</Tasks>");
+                }
             }
         }
 
@@ -62,10 +75,12 @@ namespace ToDoList {
             try {
                 doc.Load(path);
             } catch (XmlException) {
-                MessageBox.Show("There is something wrong with the TDL file.  Please try another one.", "Open TDL Error", 
+                MessageBox.Show("There is something wrong with the TDL file.  Please try another one.", "Open TDL Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return null;
+            } catch (IOException) {
+                return new List<Task> { };
             }
 
             List<Task> tasks = new List<Task>();
