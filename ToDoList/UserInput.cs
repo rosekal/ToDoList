@@ -12,7 +12,8 @@ namespace ToDoList {
 
         private TextBox txbx;
         private CheckBox chkbx;
-        private Button btn;
+        private Button createBtn;
+        private Button clearBtn;
         //private VScrollBar scroll;
 
         private string currFile = "";
@@ -68,6 +69,14 @@ namespace ToDoList {
             fm.BackUpFile(toDoList);
         }
 
+        private void btnClear_Click(object sender, EventArgs e) {
+            DialogResult result = MessageBox.Show("Are you sure you want to clear this list?", 
+                "Clear List Confirmation", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes) {
+                ResetForm();
+            }
+        }
+
         private void UserInput_FormClosing(object sender, FormClosingEventArgs e) {
             fm.BackUpFile(toDoList);
         }
@@ -104,15 +113,7 @@ namespace ToDoList {
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e) {
-            //Resetting x and y variables
-            x = 10;
-            y = 20;
-
-            //Clearing the list, and recreating the input widgets
-            toDoList.Clear();
-            mainPanel.Controls.Clear();
-            CreateInputWidgets();
-            PositionInputWidgets();
+            ResetForm();
 
             //Setting current file to nothing
             currFile = "";
@@ -127,6 +128,51 @@ namespace ToDoList {
                     task.Completed = chkbx.Checked;
                 }
             }
+        }
+
+        private void chkbx_Clicked(object sender, EventArgs e) {
+            MouseEventArgs me = (MouseEventArgs)e;
+
+            if (me.Button == MouseButtons.Right) {
+
+                CheckBox chkbx = (CheckBox)sender;
+
+                for (int i = 0; i < toDoList.Count; i++) {
+                    if (toDoList[i].Id.Equals(chkbx.Tag)) {
+                        toDoList.Remove(toDoList[i]);
+                    }
+                }
+
+                PopulateToDoList();
+            }
+        }
+
+        bool entered = false;
+
+        private void chkbx_Enter(object sender, EventArgs e) {
+            if (!entered) {
+                CheckBox hovered = (CheckBox)sender;
+                ToolTip tp = new ToolTip();
+                tp.SetToolTip(hovered, "Right click to remove");
+
+                entered = true;
+            }
+        }
+
+        private void chkbx_Leave(object sender, EventArgs e) {
+            entered = false;
+        }
+
+        private void ResetForm() {
+            //Resetting x and y variables
+            x = 10;
+            y = 20;
+
+            //Clearing the list, and recreating the input widgets
+            toDoList.Clear();
+            mainPanel.Controls.Clear();
+            CreateInputWidgets();
+            PositionInputWidgets();
         }
 
         private void SetTitle(string title) {
@@ -152,13 +198,22 @@ namespace ToDoList {
             mainPanel.Controls.Add(txbx);
 
             //Create button to add the user's task
-            btn = new Button() {
+            createBtn = new Button() {
                 Text = "Create",
             };
 
-            btn.Click += new EventHandler(btnCreate_Click);
+            createBtn.Click += new EventHandler(btnCreate_Click);
 
-            mainPanel.Controls.Add(btn);            
+            mainPanel.Controls.Add(createBtn);
+
+            //Clear button to clear the current list
+            clearBtn = new Button() {
+                Text = "Clear"
+            };
+
+            clearBtn.Click += new EventHandler(btnClear_Click);
+
+            mainPanel.Controls.Add(clearBtn);
 
             PositionInputWidgets();
         }
@@ -179,8 +234,11 @@ namespace ToDoList {
                 };
 
                 check.CheckStateChanged += new EventHandler(chkbx_CheckStateChanged);
+                check.MouseDown += new MouseEventHandler(chkbx_Clicked);
+                check.MouseEnter += new EventHandler(chkbx_Enter);
+                check.MouseLeave += new EventHandler(chkbx_Leave);
 
-                if(mainPanel.Height > 350) {
+                if (mainPanel.Height > 350) {
                     //scroll.Enabled = true;
                 } else if (mainPanel.Height < check.Location.Y + 70) {
                     //scroll.Enabled = false;
@@ -214,7 +272,8 @@ namespace ToDoList {
         private void PositionInputWidgets() {
             chkbx.Location = new Point(x, y);
             txbx.Location = new Point(x + 20, y - chkbx.Height / 4);
-            btn.Location = new Point(x + 20, y + 20);
+            createBtn.Location = new Point(x + 20, y + 20);
+            clearBtn.Location = new Point(x + 125, y + 20);
 
             mainPanel.AutoScrollPosition = new Point(0, mainPanel.VerticalScroll.Maximum);
         }
