@@ -29,7 +29,7 @@ namespace ToDoList {
             toDoList = fm.RestoreBackup();
 
 
-            AddInputWidgets();
+            CreateInputWidgets();
 
             PopulateToDoList();
 
@@ -38,7 +38,7 @@ namespace ToDoList {
             var t = new System.Threading.Timer(o => fm.BackUpFile(toDoList), null, 10000, 10000);
         }
 
-        private void AddInputWidgets() {
+        private void CreateInputWidgets() {
             //Create dull checkbox
             chkbx = new CheckBox() {
                 Checked = false,
@@ -64,6 +64,8 @@ namespace ToDoList {
             btn.Click += new EventHandler(btnCreate_Click);
 
             gbxList.Controls.Add(btn);
+
+            PositionInputWidgets();
         }
 
         private void txbx_TextChanged(object sender, EventArgs e) {
@@ -114,7 +116,7 @@ namespace ToDoList {
             y = 20;
 
             gbxList.Controls.Clear();
-            AddInputWidgets();
+            CreateInputWidgets();
             foreach (Task task in toDoList) {
                 CheckBox check = new CheckBox {
                     Text = task.Name,
@@ -170,6 +172,14 @@ namespace ToDoList {
 
                 currFile = saveFile.FileName;
             }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e) {
+            toDoList.Clear();
+            gbxList.Controls.Clear();
+            CreateInputWidgets();
+
+            currFile = "";
         }
 
         private void PositionInputWidgets() {
