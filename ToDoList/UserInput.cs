@@ -47,6 +47,14 @@ namespace ToDoList {
         }
 
         private void btnCreate_Click(object sender, EventArgs e) {
+            //Validate input
+            if(txbx.Text == "") {
+                MessageBox.Show("Task cannot be empty.", "Task Creation Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
             //Add new item to the list
             toDoList.Add(new Task(Task.CreateId(), txbx.Text, false));
 
@@ -82,6 +90,36 @@ namespace ToDoList {
             }
         }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (currFile.Equals("")) {
+                PromptSaveLocation();
+            } else {
+                fm.WriteToFile(currFile, toDoList);
+            }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e) {
+            x = 10;
+            y = 20;
+
+            toDoList.Clear();
+            mainPanel.Controls.Clear();
+            CreateInputWidgets();
+            PositionInputWidgets();
+
+            currFile = "";
+        }
+
+        private void chkbx_CheckStateChanged(object sender, EventArgs e) {
+            CheckBox chkbx = (CheckBox)sender;
+
+            foreach (Task task in toDoList) {
+                if (task.Id == chkbx.Tag.ToString()) {
+                    task.Completed = chkbx.Checked;
+                }
+            }
+        }
+
         private void CreateInputWidgets() {
             //Create dull checkbox
             chkbx = new CheckBox() {
@@ -107,16 +145,7 @@ namespace ToDoList {
 
             btn.Click += new EventHandler(btnCreate_Click);
 
-            mainPanel.Controls.Add(btn);
-
-
-            /*scroll = new VScrollBar {
-                Dock = DockStyle.Right,
-                Enabled = false
-            };
-
-            scroll.Scroll += (sender, e) => { mainPanel.VerticalScroll.Value = scroll.Value; };
-            mainPanel.Controls.Add(scroll);*/
+            mainPanel.Controls.Add(btn);            
 
             PositionInputWidgets();
         }
@@ -154,24 +183,6 @@ namespace ToDoList {
             PositionInputWidgets();
         }
 
-        private void chkbx_CheckStateChanged(object sender, EventArgs e) {
-            CheckBox chkbx = (CheckBox)sender;
-
-            foreach (Task task in toDoList) {
-                if (task.Id == chkbx.Tag.ToString()) {
-                    task.Completed = chkbx.Checked;
-                }
-            }
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
-            if (currFile.Equals("")) {
-                PromptSaveLocation();
-            } else {
-                fm.WriteToFile(currFile, toDoList);
-            }
-        }
-
         private void PromptSaveLocation() {
             SaveFileDialog saveFile = new SaveFileDialog {
                 Filter = "ToDoList file (*.tdl)|*.tdl",
@@ -185,14 +196,6 @@ namespace ToDoList {
 
                 currFile = saveFile.FileName;
             }
-        }
-
-        private void newToolStripMenuItem_Click(object sender, EventArgs e) {
-            toDoList.Clear();
-            mainPanel.Controls.Clear();
-            CreateInputWidgets();
-
-            currFile = "";
         }
 
         private void PositionInputWidgets() {
