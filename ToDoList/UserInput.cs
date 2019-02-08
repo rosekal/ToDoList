@@ -23,7 +23,7 @@ namespace ToDoList {
 
         public UserInput() {
             InitializeComponent();
-            this.Text = AppName;
+            SetTitle(null);
 
             fm = new FileManager();
 
@@ -83,7 +83,7 @@ namespace ToDoList {
 
                 if (results != null) {
                     toDoList = results;
-                    this.Text = $"{Path.GetFileName(openFile.FileName)} - {AppName}";
+                    SetTitle(Path.GetFileName(openFile.FileName));
                     currFile = openFile.FileName;
                     PopulateToDoList();
                 }
@@ -99,15 +99,19 @@ namespace ToDoList {
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e) {
+            //Resetting x and y variables
             x = 10;
             y = 20;
 
+            //Clearing the list, and recreating the input widgets
             toDoList.Clear();
             mainPanel.Controls.Clear();
             CreateInputWidgets();
             PositionInputWidgets();
 
+            //Setting current file to nothing
             currFile = "";
+            SetTitle(null);
         }
 
         private void chkbx_CheckStateChanged(object sender, EventArgs e) {
@@ -118,6 +122,10 @@ namespace ToDoList {
                     task.Completed = chkbx.Checked;
                 }
             }
+        }
+
+        private void SetTitle(string title) {
+            this.Text = (title == null) ? AppName : $"{title} - {AppName}";
         }
 
         private void CreateInputWidgets() {
@@ -191,7 +199,7 @@ namespace ToDoList {
             };
 
             if (saveFile.ShowDialog() == DialogResult.OK) {
-                this.Text = $"{Path.GetFileName(saveFile.FileName)} - {AppName}";
+                SetTitle(Path.GetFileName(saveFile.FileName));
                 fm.WriteToFile(saveFile.FileName, toDoList);
 
                 currFile = saveFile.FileName;
