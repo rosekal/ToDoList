@@ -136,14 +136,6 @@ namespace ToDoList {
 
                 if (task.Id == chkbx.Tag.ToString()) {
                     task.Completed = chkbx.Checked;
-
-                    if (chkbx.Checked) {
-                        toDoList.Remove(task);
-                        toDoList.Insert(toDoList.Count, task);
-                    } else {
-                        toDoList.Remove(task);
-                        toDoList.Insert(0, task);
-                    }
                 }
             }
 
@@ -259,6 +251,19 @@ namespace ToDoList {
 
             mainPanel.Controls.Clear();
             CreateInputWidgets();
+
+            //Correct order of ToDoList
+            for(int i = 0; i < toDoList.Count; i++) {
+                Task task = toDoList[i];
+                if (task.Completed) {
+                    toDoList.Remove(task);
+                    toDoList.Insert(toDoList.Count, task);
+                } else {
+                    toDoList.Remove(task);
+                    toDoList.Insert(0, task);
+                }
+            }
+
             foreach (Task task in toDoList) {
                 CheckBox check = new CheckBox {
                     Text = task.Name,
@@ -267,6 +272,9 @@ namespace ToDoList {
                     AutoSize = true,
                     Tag = task.Id
                 };
+
+                Font f = new Font(chkbx.Font, (check.Checked ? FontStyle.Strikeout : FontStyle.Regular));
+                check.Font = f;
 
                 check.CheckStateChanged += new EventHandler(chkbx_CheckStateChanged);
                 check.MouseDown += new MouseEventHandler(chkbx_Clicked);
