@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.IO;
 using System.Drawing;
+using System.Collections.ObjectModel;
 
 namespace ToDoList {
     public partial class UserInput : Form {
@@ -35,6 +36,7 @@ namespace ToDoList {
 
             PopulateToDoList();
 
+            AutoFocusTextBox();
 
             //Backup to the file every 5 minutes
             var t = new System.Threading.Timer(o => fm.BackUpFile(toDoList), null, 10000, 10000);
@@ -48,13 +50,17 @@ namespace ToDoList {
         }
 
         private void btnCreate_Click(object sender, EventArgs e) {
+            CreateNewTask();
+        }
+
+        private void CreateNewTask() {
             //Validate input
-            if(txbx.Text == "") {
+            if (txbx.Text == "") {
                 MessageBox.Show("Task cannot be empty.", "Task Creation Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return;
-            }else if(txbx.Text.Length > 250) {
+            } else if (txbx.Text.Length > 250) {
                 MessageBox.Show("Task cannot be more than 250 characters.  Please shorten the task.", "Task Creation Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -67,6 +73,8 @@ namespace ToDoList {
             PopulateToDoList();
 
             fm.BackUpFile(toDoList);
+
+            AutoFocusTextBox();
         }
 
         private void btnClear_Click(object sender, EventArgs e) {
@@ -123,20 +131,22 @@ namespace ToDoList {
         private void chkbx_CheckStateChanged(object sender, EventArgs e) {
             CheckBox chkbx = (CheckBox)sender;
 
-            foreach (Task task in toDoList) {
+            for(int i = 0; i < toDoList.Count; i++) {
+                Task task = toDoList[i];
+
                 if (task.Id == chkbx.Tag.ToString()) {
                     task.Completed = chkbx.Checked;
                 }
             }
+
+            PopulateToDoList();
         }
 
         private void chkbx_Clicked(object sender, EventArgs e) {
             MouseEventArgs me = (MouseEventArgs)e;
 
             if (me.Button == MouseButtons.Right) {
-
                 CheckBox chkbx = (CheckBox)sender;
-
                 for (int i = 0; i < toDoList.Count; i++) {
                     if (toDoList[i].Id.Equals(chkbx.Tag)) {
                         toDoList.Remove(toDoList[i]);
@@ -161,6 +171,14 @@ namespace ToDoList {
 
         private void chkbx_Leave(object sender, EventArgs e) {
             entered = false;
+        }
+
+        private void chkAll_CheckedChanged(object sender, EventArgs e) {
+            foreach(Task task in toDoList) {
+                task.Completed = chkAll.Checked;
+            }
+
+            PopulateToDoList();
         }
 
         private void ResetForm() {
@@ -195,6 +213,7 @@ namespace ToDoList {
             };
 
             txbx.TextChanged += new EventHandler(txbx_TextChanged);
+            txbx.KeyDown += new KeyEventHandler(txbx_KeyPressed);
             mainPanel.Controls.Add(txbx);
 
             //Create button to add the user's task
@@ -218,12 +237,24 @@ namespace ToDoList {
             PositionInputWidgets();
         }
 
+        private void txbx_KeyPressed(object sender, EventArgs e) {
+            KeyEventArgs key = (KeyEventArgs) e;
+
+            if(key.KeyCode == Keys.Enter) {
+                CreateNewTask();
+            }
+        }
+
         private void PopulateToDoList() {
             x = 10;
             y = 20;
 
             mainPanel.Controls.Clear();
             CreateInputWidgets();
+
+            //Have to sort it by not completed first, then completed
+            SortToDoList();
+
             foreach (Task task in toDoList) {
                 CheckBox check = new CheckBox {
                     Text = task.Name,
@@ -232,6 +263,9 @@ namespace ToDoList {
                     AutoSize = true,
                     Tag = task.Id
                 };
+
+                Font f = new Font(chkbx.Font, (check.Checked ? FontStyle.Strikeout : FontStyle.Regular));
+                check.Font = f;
 
                 check.CheckStateChanged += new EventHandler(chkbx_CheckStateChanged);
                 check.MouseDown += new MouseEventHandler(chkbx_Clicked);
@@ -252,6 +286,26 @@ namespace ToDoList {
             }
 
             PositionInputWidgets();
+        }
+
+        private void SortToDoList() {
+            List<Task> temp = new List<Task>();
+
+            //Loop #1: Add only not completed to list
+            foreach (Task t in toDoList) {
+                if (!t.Completed) {
+                    temp.Add(t);
+                }
+            }
+
+            //Loop #2: Append the completed tasks to end of list
+            foreach (Task t in toDoList) {
+                if (t.Completed) {
+                    temp.Add(t);
+                }
+            }
+
+            toDoList = temp;
         }
 
         private void PromptSaveLocation() {
@@ -276,6 +330,10 @@ namespace ToDoList {
             clearBtn.Location = new Point(x + 125, y + 20);
 
             mainPanel.AutoScrollPosition = new Point(0, mainPanel.VerticalScroll.Maximum);
+        }
+
+        private void AutoFocusTextBox() {
+            txbx.Focus();
         }
     }
 }
