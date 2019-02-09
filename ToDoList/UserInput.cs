@@ -140,6 +140,9 @@ namespace ToDoList {
                     if (chkbx.Checked) {
                         toDoList.Remove(task);
                         toDoList.Insert(toDoList.Count, task);
+                    } else {
+                        toDoList.Remove(task);
+                        toDoList.Insert(0, task);
                     }
                 }
             }
