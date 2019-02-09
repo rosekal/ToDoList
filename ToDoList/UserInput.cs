@@ -35,6 +35,7 @@ namespace ToDoList {
 
             PopulateToDoList();
 
+            AutoFocusTextBox();
 
             //Backup to the file every 5 minutes
             var t = new System.Threading.Timer(o => fm.BackUpFile(toDoList), null, 10000, 10000);
@@ -48,13 +49,17 @@ namespace ToDoList {
         }
 
         private void btnCreate_Click(object sender, EventArgs e) {
+            CreateNewTask();
+        }
+
+        private void CreateNewTask() {
             //Validate input
-            if(txbx.Text == "") {
+            if (txbx.Text == "") {
                 MessageBox.Show("Task cannot be empty.", "Task Creation Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return;
-            }else if(txbx.Text.Length > 250) {
+            } else if (txbx.Text.Length > 250) {
                 MessageBox.Show("Task cannot be more than 250 characters.  Please shorten the task.", "Task Creation Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -67,6 +72,8 @@ namespace ToDoList {
             PopulateToDoList();
 
             fm.BackUpFile(toDoList);
+
+            AutoFocusTextBox();
         }
 
         private void btnClear_Click(object sender, EventArgs e) {
@@ -195,6 +202,7 @@ namespace ToDoList {
             };
 
             txbx.TextChanged += new EventHandler(txbx_TextChanged);
+            txbx.KeyDown += new KeyEventHandler(txbx_KeyPressed);
             mainPanel.Controls.Add(txbx);
 
             //Create button to add the user's task
@@ -216,6 +224,14 @@ namespace ToDoList {
             mainPanel.Controls.Add(clearBtn);
 
             PositionInputWidgets();
+        }
+
+        private void txbx_KeyPressed(object sender, EventArgs e) {
+            KeyEventArgs key = (KeyEventArgs) e;
+
+            if(key.KeyCode == Keys.Enter) {
+                CreateNewTask();
+            }
         }
 
         private void PopulateToDoList() {
@@ -276,6 +292,10 @@ namespace ToDoList {
             clearBtn.Location = new Point(x + 125, y + 20);
 
             mainPanel.AutoScrollPosition = new Point(0, mainPanel.VerticalScroll.Maximum);
+        }
+
+        private void AutoFocusTextBox() {
+            txbx.Focus();
         }
     }
 }
