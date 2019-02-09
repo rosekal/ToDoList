@@ -252,17 +252,8 @@ namespace ToDoList {
             mainPanel.Controls.Clear();
             CreateInputWidgets();
 
-            //Correct order of ToDoList
-            for(int i = 0; i < toDoList.Count; i++) {
-                Task task = toDoList[i];
-                if (task.Completed) {
-                    toDoList.Remove(task);
-                    toDoList.Insert(toDoList.Count, task);
-                } else {
-                    toDoList.Remove(task);
-                    toDoList.Insert(0, task);
-                }
-            }
+            //Have to sort it by not completed first, then completed
+            SortToDoList();
 
             foreach (Task task in toDoList) {
                 CheckBox check = new CheckBox {
@@ -295,6 +286,26 @@ namespace ToDoList {
             }
 
             PositionInputWidgets();
+        }
+
+        private void SortToDoList() {
+            List<Task> temp = new List<Task>();
+
+            //Loop #1: Add only not completed to list
+            foreach (Task t in toDoList) {
+                if (!t.Completed) {
+                    temp.Add(t);
+                }
+            }
+
+            //Loop #2: Append the completed tasks to end of list
+            foreach (Task t in toDoList) {
+                if (t.Completed) {
+                    temp.Add(t);
+                }
+            }
+
+            toDoList = temp;
         }
 
         private void PromptSaveLocation() {
