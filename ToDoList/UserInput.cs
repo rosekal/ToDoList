@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.IO;
 using System.Drawing;
+using System.Collections.ObjectModel;
 
 namespace ToDoList {
     public partial class UserInput : Form {
@@ -130,20 +131,27 @@ namespace ToDoList {
         private void chkbx_CheckStateChanged(object sender, EventArgs e) {
             CheckBox chkbx = (CheckBox)sender;
 
-            foreach (Task task in toDoList) {
+            for(int i = 0; i < toDoList.Count; i++) {
+                Task task = toDoList[i];
+
                 if (task.Id == chkbx.Tag.ToString()) {
                     task.Completed = chkbx.Checked;
+
+                    if (chkbx.Checked) {
+                        toDoList.Remove(task);
+                        toDoList.Insert(toDoList.Count, task);
+                    }
                 }
             }
+
+            PopulateToDoList();
         }
 
         private void chkbx_Clicked(object sender, EventArgs e) {
             MouseEventArgs me = (MouseEventArgs)e;
 
             if (me.Button == MouseButtons.Right) {
-
                 CheckBox chkbx = (CheckBox)sender;
-
                 for (int i = 0; i < toDoList.Count; i++) {
                     if (toDoList[i].Id.Equals(chkbx.Tag)) {
                         toDoList.Remove(toDoList[i]);
@@ -168,6 +176,14 @@ namespace ToDoList {
 
         private void chkbx_Leave(object sender, EventArgs e) {
             entered = false;
+        }
+
+        private void chkAll_CheckedChanged(object sender, EventArgs e) {
+            foreach (Control con in mainPanel.Controls) {
+                if (con is CheckBox && con != chkbx) {
+                    ((CheckBox)con).Checked = chkAll.Checked;
+                }
+            }
         }
 
         private void ResetForm() {
@@ -292,14 +308,6 @@ namespace ToDoList {
             clearBtn.Location = new Point(x + 125, y + 20);
 
             mainPanel.AutoScrollPosition = new Point(0, mainPanel.VerticalScroll.Maximum);
-        }
-
-        private void chkAll_CheckedChanged(object sender, EventArgs e) {
-            foreach(Control con in mainPanel.Controls) {
-                if(con is CheckBox && con != chkbx) {
-                    ((CheckBox)con).Checked = chkAll.Checked;
-                }
-            }
         }
 
         private void AutoFocusTextBox() {
