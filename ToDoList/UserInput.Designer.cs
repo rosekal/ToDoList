@@ -38,6 +38,7 @@
             this.aboutToDoListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbxList = new System.Windows.Forms.GroupBox();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.chkAll = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.gbxList.SuspendLayout();
             this.SuspendLayout();
@@ -108,10 +109,11 @@
             // 
             // gbxList
             // 
+            this.gbxList.Controls.Add(this.chkAll);
             this.gbxList.Controls.Add(this.mainPanel);
             this.gbxList.Location = new System.Drawing.Point(12, 27);
             this.gbxList.Name = "gbxList";
-            this.gbxList.Size = new System.Drawing.Size(431, 101);
+            this.gbxList.Size = new System.Drawing.Size(431, 118);
             this.gbxList.TabIndex = 6;
             this.gbxList.TabStop = false;
             this.gbxList.Text = "To Do";
@@ -119,10 +121,20 @@
             // mainPanel
             // 
             this.mainPanel.AutoScroll = true;
-            this.mainPanel.Location = new System.Drawing.Point(6, 19);
+            this.mainPanel.Location = new System.Drawing.Point(6, 35);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(419, 63);
+            this.mainPanel.Size = new System.Drawing.Size(419, 77);
             this.mainPanel.TabIndex = 0;
+            // 
+            // chkAll
+            // 
+            this.chkAll.AutoSize = true;
+            this.chkAll.Location = new System.Drawing.Point(16, 22);
+            this.chkAll.Name = "chkAll";
+            this.chkAll.Size = new System.Drawing.Size(15, 14);
+            this.chkAll.TabIndex = 1;
+            this.chkAll.UseVisualStyleBackColor = true;
+            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
             // 
             // UserInput
             // 
@@ -138,6 +150,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.gbxList.ResumeLayout(false);
+            this.gbxList.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -154,6 +167,7 @@
         private System.Windows.Forms.GroupBox gbxList;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.CheckBox chkAll;
     }
 }
 

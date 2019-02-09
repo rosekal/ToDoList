@@ -294,6 +294,14 @@ namespace ToDoList {
             mainPanel.AutoScrollPosition = new Point(0, mainPanel.VerticalScroll.Maximum);
         }
 
+        private void chkAll_CheckedChanged(object sender, EventArgs e) {
+            foreach(Control con in mainPanel.Controls) {
+                if(con is CheckBox && con != chkbx) {
+                    ((CheckBox)con).Checked = chkAll.Checked;
+                }
+            }
+        }
+
         private void AutoFocusTextBox() {
             txbx.Focus();
         }
