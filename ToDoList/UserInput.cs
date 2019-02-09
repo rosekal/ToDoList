@@ -182,11 +182,11 @@ namespace ToDoList {
         }
 
         private void chkAll_CheckedChanged(object sender, EventArgs e) {
-            foreach (Control con in mainPanel.Controls) {
-                if (con is CheckBox && con != chkbx) {
-                    ((CheckBox)con).Checked = chkAll.Checked;
-                }
+            foreach(Task task in toDoList) {
+                task.Completed = chkAll.Checked;
             }
+
+            PopulateToDoList();
         }
 
         private void ResetForm() {
