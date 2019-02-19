@@ -54,30 +54,6 @@ namespace ToDoList {
             CreateNewTask();
         }
 
-        private void CreateNewTask() {
-            //Validate input
-            if (txbx.Text == "") {
-                MessageBox.Show("Task cannot be empty.", "Task Creation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                return;
-            } else if (txbx.Text.Length > 250) {
-                MessageBox.Show("Task cannot be more than 250 characters.  Please shorten the task.", "Task Creation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                return;
-            }
-
-            //Add new item to the list
-            toDoList.Add(new Task(Task.CreateId(), txbx.Text, false));
-
-            PopulateToDoList();
-
-            fm.BackUpFile(toDoList);
-
-            AutoFocusTextBox();
-        }
-
         private void btnClear_Click(object sender, EventArgs e) {
             DialogResult result = MessageBox.Show("Are you sure you want to clear this list?", 
                 "Clear List Confirmation", MessageBoxButtons.YesNo);
@@ -95,22 +71,7 @@ namespace ToDoList {
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e) {
-            OpenFileDialog openFile = new OpenFileDialog {
-                Filter = "ToDoList file (*.tdl)|*.tdl",
-                DefaultExt = "tdl",
-                AddExtension = true
-            };
-
-            if (openFile.ShowDialog() == DialogResult.OK) {
-                var results = fm.ReadFromFile(openFile.FileName);
-
-                if (results != null) {
-                    toDoList = results;
-                    SetTitle(Path.GetFileName(openFile.FileName));
-                    currFile = openFile.FileName;
-                    PopulateToDoList();
-                }
-            }
+            OpenNewFile();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -180,6 +141,30 @@ namespace ToDoList {
             }
 
             PopulateToDoList();
+        }
+
+        private void CreateNewTask() {
+            //Validate input
+            if (txbx.Text == "") {
+                MessageBox.Show("Task cannot be empty.", "Task Creation Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            } else if (txbx.Text.Length > 250) {
+                MessageBox.Show("Task cannot be more than 250 characters.  Please shorten the task.", "Task Creation Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
+            //Add new item to the list
+            toDoList.Add(new Task(Task.CreateId(), txbx.Text, false));
+
+            PopulateToDoList();
+
+            fm.BackUpFile(toDoList);
+
+            AutoFocusTextBox();
         }
 
         private void ResetForm() {
@@ -338,8 +323,47 @@ namespace ToDoList {
         }
 
         private void UserInput_KeyDown(object sender, KeyEventArgs e) {
-            if (e.Control && e.KeyCode == Keys.N) {
-                ResetForm();
+            //If control was held down
+            if (e.Control) {
+                switch (e.KeyCode) {
+                    //New to do list
+                    case Keys.N:
+                        ResetForm();
+                        break;
+                    
+                    //Open to do list
+                    case Keys.O:
+                        OpenNewFile();
+                        break;
+
+                    //Save to do list
+                    case Keys.S:
+                        if (e.Alt) {
+
+                        } else {
+
+                        }
+                        break;
+                }
+            }
+        }
+
+        private void OpenNewFile() {
+            OpenFileDialog openFile = new OpenFileDialog {
+                Filter = "ToDoList file (*.tdl)|*.tdl",
+                DefaultExt = "tdl",
+                AddExtension = true
+            };
+
+            if (openFile.ShowDialog() == DialogResult.OK) {
+                var results = fm.ReadFromFile(openFile.FileName);
+
+                if (results != null) {
+                    toDoList = results;
+                    SetTitle(Path.GetFileName(openFile.FileName));
+                    currFile = openFile.FileName;
+                    PopulateToDoList();
+                }
             }
         }
 
