@@ -37,8 +37,8 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToDoListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbxList = new System.Windows.Forms.GroupBox();
-            this.mainPanel = new System.Windows.Forms.Panel();
             this.chkAll = new System.Windows.Forms.CheckBox();
+            this.mainPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.gbxList.SuspendLayout();
             this.SuspendLayout();
@@ -50,7 +50,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(454, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(818, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -118,14 +118,6 @@
             this.gbxList.TabStop = false;
             this.gbxList.Text = "To Do";
             // 
-            // mainPanel
-            // 
-            this.mainPanel.AutoScroll = true;
-            this.mainPanel.Location = new System.Drawing.Point(6, 35);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(419, 77);
-            this.mainPanel.TabIndex = 0;
-            // 
             // chkAll
             // 
             this.chkAll.AutoSize = true;
@@ -136,17 +128,27 @@
             this.chkAll.UseVisualStyleBackColor = true;
             this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
             // 
+            // mainPanel
+            // 
+            this.mainPanel.AutoScroll = true;
+            this.mainPanel.Location = new System.Drawing.Point(6, 35);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(419, 77);
+            this.mainPanel.TabIndex = 0;
+            // 
             // UserInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(454, 462);
+            this.ClientSize = new System.Drawing.Size(818, 454);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.gbxList);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "UserInput";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserInput_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserInput_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.gbxList.ResumeLayout(false);
