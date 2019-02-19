@@ -5,6 +5,7 @@ using System.Configuration;
 using System.IO;
 using System.Drawing;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace ToDoList {
     public partial class UserInput : Form {
@@ -191,6 +192,10 @@ namespace ToDoList {
             mainPanel.Controls.Clear();
             CreateInputWidgets();
             PositionInputWidgets();
+            AutoFocusTextBox();
+
+            //Setting current file to nothing
+            currFile = "";
         }
 
         private void SetTitle(string title) {
@@ -330,6 +335,12 @@ namespace ToDoList {
             clearBtn.Location = new Point(x + 125, y + 20);
 
             mainPanel.AutoScrollPosition = new Point(0, mainPanel.VerticalScroll.Maximum);
+        }
+
+        private void UserInput_KeyDown(object sender, KeyEventArgs e) {
+            if (e.Control && e.KeyCode == Keys.N) {
+                ResetForm();
+            }
         }
 
         private void AutoFocusTextBox() {
