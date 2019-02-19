@@ -67,7 +67,7 @@ namespace ToDoList {
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e) {
-            PromptSaveLocation();
+            SaveNewFile();
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -75,11 +75,7 @@ namespace ToDoList {
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e) {
-            if (currFile.Equals("")) {
-                PromptSaveLocation();
-            } else {
-                fm.WriteToFile(currFile, toDoList);
-            }
+            SaveCurrentFile();
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -298,21 +294,6 @@ namespace ToDoList {
             toDoList = temp;
         }
 
-        private void PromptSaveLocation() {
-            SaveFileDialog saveFile = new SaveFileDialog {
-                Filter = "ToDoList file (*.tdl)|*.tdl",
-                DefaultExt = "tdl",
-                AddExtension = true
-            };
-
-            if (saveFile.ShowDialog() == DialogResult.OK) {
-                SetTitle(Path.GetFileName(saveFile.FileName));
-                fm.WriteToFile(saveFile.FileName, toDoList);
-
-                currFile = saveFile.FileName;
-            }
-        }
-
         private void PositionInputWidgets() {
             chkbx.Location = new Point(x, y);
             txbx.Location = new Point(x + 20, y - chkbx.Height / 4);
@@ -338,13 +319,36 @@ namespace ToDoList {
 
                     //Save to do list
                     case Keys.S:
-                        if (e.Alt) {
-
-                        } else {
-
-                        }
+                        SaveCurrentFile();
                         break;
                 }
+            }
+
+            if ((Keys.S | Keys.Alt | Keys.Control) == e.KeyData) {
+                SaveNewFile();
+            }
+        }
+
+        private void SaveNewFile() {
+            SaveFileDialog saveFile = new SaveFileDialog {
+                Filter = "ToDoList file (*.tdl)|*.tdl",
+                DefaultExt = "tdl",
+                AddExtension = true
+            };
+
+            if (saveFile.ShowDialog() == DialogResult.OK) {
+                SetTitle(Path.GetFileName(saveFile.FileName));
+                fm.WriteToFile(saveFile.FileName, toDoList);
+
+                currFile = saveFile.FileName;
+            }
+        }
+
+        private void SaveCurrentFile() {
+            if (currFile.Equals("")) {
+                SaveNewFile();
+            } else {
+                fm.WriteToFile(currFile, toDoList);
             }
         }
 
