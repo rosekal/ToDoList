@@ -19,6 +19,5 @@ A simple C# program designed as a to-do list generator.
 # Future tasks
 * Have an edit icon and a delete icon on-hovering an item
 * Include print option
-* Include shortcuts for New, Open, Save, and Save As
 * A tally, with the percentage of completed tasks
 * Simple graph representing what has been completed or not
