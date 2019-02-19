@@ -3,9 +3,9 @@ A simple C# program designed as a to-do list generator.
 
 # Features
 * To Do List
- * Create a to do list by entering new tasks
- * Check off completed tasks will cross out task
- * Delete tasks via right-click
+   * Create a to do list by entering new tasks
+   * Check off completed tasks will cross out task
+   * Delete tasks via right-click
 * Auto back-up feature to back-up the list and what has been checked off
   * Saves every 5 minutes
   * Saves everytime when closing application
