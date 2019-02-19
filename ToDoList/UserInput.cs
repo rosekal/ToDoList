@@ -317,7 +317,7 @@ namespace ToDoList {
                         OpenNewFile();
                         break;
 
-                    //Save to do list
+                    //Save to do lists
                     case Keys.S:
                         SaveCurrentFile();
                         break;
