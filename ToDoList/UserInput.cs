@@ -119,13 +119,38 @@ namespace ToDoList {
         }
 
         bool entered = false;
+        CheckBox hovered;
 
         private void chkbx_Enter(object sender, EventArgs e) {
             if (!entered) {
-                CheckBox hovered = (CheckBox)sender;
-                ToolTip tp = new ToolTip();
-                tp.SetToolTip(hovered, "Right click to remove");
+                hovered = (CheckBox) sender;
+                Bitmap editBMP = new Bitmap(@"C:\Users\Kalen\source\repos\ToDoList\ToDoList\Icons\edit.png");
+                Bitmap deleteBMP = new Bitmap(@"C:\Users\Kalen\source\repos\ToDoList\ToDoList\Icons\delete.png");
 
+                editBMP.MakeTransparent();
+
+                PictureBox editPB = new PictureBox {
+                    Image = editBMP,
+                    Height = 20,
+                    Width = 20,
+                    Location = new Point(hovered.Location.X + 60, hovered.Location.Y)
+                };
+
+                editPB.Click += new EventHandler(EditTask);
+
+                editPB.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                PictureBox deletePB = new PictureBox {
+                    Image = deleteBMP,
+                    Height = 20,
+                    Width = 20,
+                    Location = new Point(hovered.Location.X + 90, hovered.Location.Y)
+                };
+
+                deletePB.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                mainPanel.Controls.Add(editPB);
+                mainPanel.Controls.Add(deletePB);
                 entered = true;
             }
         }
@@ -377,6 +402,10 @@ namespace ToDoList {
 
         private void AutoFocusTextBox() {
             txbx.Focus();
+        }
+
+        private void EditTask(object sender, EventArgs e) {
+
         }
 
         Bitmap bmp;
