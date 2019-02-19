@@ -16,7 +16,6 @@ namespace ToDoList {
         private CheckBox chkbx;
         private Button createBtn;
         private Button clearBtn;
-        //private VScrollBar scroll;
 
         private string currFile = "";
 
@@ -86,6 +85,10 @@ namespace ToDoList {
             SetTitle(null);
         }
 
+        private void printToolStripMenuItem_Click(object sender, EventArgs e) {
+            PrintList();
+        }
+
         private void chkbx_CheckStateChanged(object sender, EventArgs e) {
             CheckBox chkbx = (CheckBox)sender;
 
@@ -137,6 +140,14 @@ namespace ToDoList {
             }
 
             PopulateToDoList();
+        }
+
+        private void txbx_KeyPressed(object sender, EventArgs e) {
+            KeyEventArgs key = (KeyEventArgs)e;
+
+            if (key.KeyCode == Keys.Enter) {
+                CreateNewTask();
+            }
         }
 
         private void CreateNewTask() {
@@ -223,14 +234,6 @@ namespace ToDoList {
             PositionInputWidgets();
         }
 
-        private void txbx_KeyPressed(object sender, EventArgs e) {
-            KeyEventArgs key = (KeyEventArgs) e;
-
-            if(key.KeyCode == Keys.Enter) {
-                CreateNewTask();
-            }
-        }
-
         private void PopulateToDoList() {
             x = 10;
             y = 20;
@@ -258,10 +261,7 @@ namespace ToDoList {
                 check.MouseEnter += new EventHandler(chkbx_Enter);
                 check.MouseLeave += new EventHandler(chkbx_Leave);
 
-                if (mainPanel.Height > 350) {
-                    //scroll.Enabled = true;
-                } else if (mainPanel.Height < check.Location.Y + 70) {
-                    //scroll.Enabled = false;
+                if (mainPanel.Height < 500 && mainPanel.Height < check.Location.Y + 70) {
                     mainPanel.Height += 30;
                     gbxList.Height += 30;
                 }
@@ -373,6 +373,23 @@ namespace ToDoList {
 
         private void AutoFocusTextBox() {
             txbx.Focus();
+        }
+
+        Bitmap bmp;
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e) {
+            e.Graphics.DrawImage(bmp, 0, 0);
+        }
+
+        private void PrintList() {
+            Graphics g = this.CreateGraphics();
+            bmp = new Bitmap(gbxList.Size.Width - 15, gbxList.Size.Height -100, g);
+
+            Graphics mg = Graphics.FromImage(bmp);
+            mg.CopyFromScreen(this.Location.X, this.Location.Y, 50, 50, this.Size);
+            mg.CopyFromScreen(this.Location.X + gbxList.Location.X, 
+                this.Location.Y + gbxList.Location.Y + menuStrip1.Height + 40, 0, 0, this.Size);
+            printPreviewDialog1.ShowDialog();
         }
     }
 }
