@@ -321,6 +321,10 @@ namespace ToDoList {
                     case Keys.S:
                         SaveCurrentFile();
                         break;
+
+                    case Keys.P:
+                        PrintList();
+                        break;
                 }
             }
 
