@@ -21,7 +21,7 @@ namespace ToDoList {
 
         private int x = 0, y = 0;
 
-        private string AppName = ConfigurationManager.AppSettings["AppName"];
+        private static string AppName = ConfigurationManager.AppSettings["AppName"];
 
         public UserInput() {
             InitializeComponent();
@@ -174,41 +174,23 @@ namespace ToDoList {
                 CreateNewTask();
             }
         }
-
+        
         private void CreateNewTask() {
-            //Validate input
-            if (txbx.Text == "") {
-                MessageBox.Show("Task cannot be empty.", "Task Creation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                return;
-            } else if (txbx.Text.Length > 250) {
-                MessageBox.Show("Task cannot be more than 250 characters.  Please shorten the task.", "Task Creation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                return;
-            }
-
-            //Add new item to the list
-            toDoList.Add(new Task(Task.CreateId(), txbx.Text, false));
+            toDoList.Add(Task.CreateNewTask(txbx.Text));
 
             PopulateToDoList();
-
             fm.BackUpFile(toDoList);
-
             AutoFocusTextBox();
         }
 
         private void ResetForm() {
             //Resetting x and y variables
-            x = 10;
-            y = 20;
+            ResetXAndY();
 
             //Clearing the list, and recreating the input widgets
             toDoList.Clear();
             mainPanel.Controls.Clear();
             CreateInputWidgets();
-            PositionInputWidgets();
             AutoFocusTextBox();
 
             //Setting current file to nothing
@@ -216,7 +198,7 @@ namespace ToDoList {
         }
 
         private void SetTitle(string title) {
-            this.Text = (title == null) ? AppName : $"{title} - {AppName}";
+            Text = (title == null) ? AppName : $"{title} - {AppName}";
         }
 
         private void CreateInputWidgets() {
@@ -225,9 +207,7 @@ namespace ToDoList {
                 Checked = false,
                 Enabled = false,
                 AutoSize = true
-            };
-
-            mainPanel.Controls.Add(chkbx);
+            };            
 
             //Create textbox for user input
             txbx = new TextBox() {
@@ -235,8 +215,7 @@ namespace ToDoList {
             };
 
             txbx.TextChanged += new EventHandler(txbx_TextChanged);
-            txbx.KeyDown += new KeyEventHandler(txbx_KeyPressed);
-            mainPanel.Controls.Add(txbx);
+            txbx.KeyDown += new KeyEventHandler(txbx_KeyPressed);   
 
             //Create button to add the user's task
             createBtn = new Button() {
@@ -245,8 +224,6 @@ namespace ToDoList {
 
             createBtn.Click += new EventHandler(btnCreate_Click);
 
-            mainPanel.Controls.Add(createBtn);
-
             //Clear button to clear the current list
             clearBtn = new Button() {
                 Text = "Clear"
@@ -254,14 +231,19 @@ namespace ToDoList {
 
             clearBtn.Click += new EventHandler(btnClear_Click);
 
+
+            //Add all controls to the main panel
+            mainPanel.Controls.Add(chkbx);
+            mainPanel.Controls.Add(txbx);
+            mainPanel.Controls.Add(createBtn);
             mainPanel.Controls.Add(clearBtn);
 
+            //Position them after creating
             PositionInputWidgets();
         }
 
         private void PopulateToDoList() {
-            x = 10;
-            y = 20;
+            ResetXAndY();
 
             mainPanel.Controls.Clear();
             CreateInputWidgets();
@@ -297,6 +279,11 @@ namespace ToDoList {
             }
 
             PositionInputWidgets();
+        }
+
+        private void ResetXAndY() {
+            x = 10;
+            y = 20;
         }
 
         private void SortToDoList() {
@@ -359,18 +346,8 @@ namespace ToDoList {
         }
 
         private void SaveNewFile() {
-            SaveFileDialog saveFile = new SaveFileDialog {
-                Filter = "ToDoList file (*.tdl)|*.tdl",
-                DefaultExt = "tdl",
-                AddExtension = true
-            };
-
-            if (saveFile.ShowDialog() == DialogResult.OK) {
-                SetTitle(Path.GetFileName(saveFile.FileName));
-                fm.WriteToFile(saveFile.FileName, toDoList);
-
-                currFile = saveFile.FileName;
-            }
+            currFile = fm.SaveNewFile(toDoList);
+            SetTitle(Path.GetFileName(currFile));
         }
 
         private void SaveCurrentFile() {

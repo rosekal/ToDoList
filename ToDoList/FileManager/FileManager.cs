@@ -103,5 +103,21 @@ namespace ToDoList {
 
             return tasks;
         }
+
+        internal string SaveNewFile(List<Task> toDoList) {
+            SaveFileDialog saveFile = new SaveFileDialog {
+                Filter = "ToDoList file (*.tdl)|*.tdl",
+                DefaultExt = "tdl",
+                AddExtension = true
+            };
+
+            if (saveFile.ShowDialog() == DialogResult.OK) {
+                WriteToFile(saveFile.FileName, toDoList);
+
+                return saveFile.FileName;
+            }
+
+            return "";
+        }
     }
 }
