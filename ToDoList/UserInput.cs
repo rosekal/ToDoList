@@ -121,7 +121,7 @@ namespace ToDoList {
         bool entered = false;
         CheckBox hovered;
 
-        private void chkbx_Enter(object sender, EventArgs e) {
+        private void chkbxPnl_Hover(object sender, EventArgs e) {
             if (!entered) {
                 hovered = (CheckBox) sender;
                 Bitmap editBMP = new Bitmap(@"C:\Users\Kalen\source\repos\ToDoList\ToDoList\Icons\edit.png");
@@ -155,8 +155,11 @@ namespace ToDoList {
             }
         }
 
-        private void chkbx_Leave(object sender, EventArgs e) {
+        private void chkbxPnl_Leave(object sender, EventArgs e) {
             entered = false;
+        }
+
+        private void EditTask(object sender, EventArgs e) {
         }
 
         private void chkAll_CheckedChanged(object sender, EventArgs e) {
@@ -252,10 +255,20 @@ namespace ToDoList {
             SortToDoList();
 
             foreach (Task task in toDoList) {
+
+                Panel checkPanel = new Panel {
+                    Location = new Point(x, y),
+                    Height = 20,
+                    Width = 100,
+                    AutoSize = true,
+                };
+
+                checkPanel.Enter += new EventHandler(chkbxPnl_Hover);
+                checkPanel.Leave += new EventHandler(chkbxPnl_Leave);
+
                 CheckBox check = new CheckBox {
                     Text = task.Name,
                     Checked = task.Completed,
-                    Location = new Point(x, y),
                     AutoSize = true,
                     Tag = task.Id
                 };
@@ -265,15 +278,14 @@ namespace ToDoList {
 
                 check.CheckStateChanged += new EventHandler(chkbx_CheckStateChanged);
                 check.MouseDown += new MouseEventHandler(chkbx_Clicked);
-                check.MouseEnter += new EventHandler(chkbx_Enter);
-                check.MouseLeave += new EventHandler(chkbx_Leave);
 
-                if (mainPanel.Height < 500 && mainPanel.Height < check.Location.Y + 70) {
+                if (mainPanel.Height < 500 && mainPanel.Height < checkPanel.Location.Y + 70) {
                     mainPanel.Height += 30;
                     gbxList.Height += 30;
                 }
 
-                mainPanel.Controls.Add(check);
+                checkPanel.Controls.Add(check);
+                mainPanel.Controls.Add(checkPanel);
 
                 y += 30;
             }
@@ -370,10 +382,6 @@ namespace ToDoList {
 
         private void AutoFocusTextBox() {
             txbx.Focus();
-        }
-
-        private void EditTask(object sender, EventArgs e) {
-
         }
 
         Bitmap bmp;
