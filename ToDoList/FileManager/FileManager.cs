@@ -113,11 +113,27 @@ namespace ToDoList {
 
             if (saveFile.ShowDialog() == DialogResult.OK) {
                 WriteToFile(saveFile.FileName, toDoList);
+                UserInput.currFile = Path.GetFileName(saveFile.FileName);
 
                 return saveFile.FileName;
             }
 
             return "";
+        }
+
+        internal List<Task> OpenNewFile() {
+            OpenFileDialog openFile = new OpenFileDialog {
+                Filter = "ToDoList file (*.tdl)|*.tdl",
+                DefaultExt = "tdl",
+                AddExtension = true
+            };
+
+            if (openFile.ShowDialog() == DialogResult.OK) {
+                UserInput.currFile = Path.GetFileName(openFile.FileName);
+                return ReadFromFile(openFile.FileName);
+            }
+
+            return null;
         }
     }
 }

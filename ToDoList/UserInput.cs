@@ -17,7 +17,7 @@ namespace ToDoList {
         private Button createBtn;
         private Button clearBtn;
 
-        private string currFile = "";
+        public static string currFile = "";
 
         private int x = 0, y = 0;
 
@@ -346,8 +346,8 @@ namespace ToDoList {
         }
 
         private void SaveNewFile() {
-            currFile = fm.SaveNewFile(toDoList);
-            SetTitle(Path.GetFileName(currFile));
+            fm.SaveNewFile(toDoList);
+            SetTitle(currFile);
         }
 
         private void SaveCurrentFile() {
@@ -359,21 +359,12 @@ namespace ToDoList {
         }
 
         private void OpenNewFile() {
-            OpenFileDialog openFile = new OpenFileDialog {
-                Filter = "ToDoList file (*.tdl)|*.tdl",
-                DefaultExt = "tdl",
-                AddExtension = true
-            };
+            var results = fm.OpenNewFile();
 
-            if (openFile.ShowDialog() == DialogResult.OK) {
-                var results = fm.ReadFromFile(openFile.FileName);
-
-                if (results != null) {
-                    toDoList = results;
-                    SetTitle(Path.GetFileName(openFile.FileName));
-                    currFile = openFile.FileName;
-                    PopulateToDoList();
-                }
+            if (results != null) {
+                toDoList = results;
+                SetTitle(currFile);
+                PopulateToDoList();
             }
         }
 
