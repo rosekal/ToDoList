@@ -1,0 +1,58 @@
+<Tasks>
+	<Task id="yHAi4i4wF1">
+		<Name>Lay on ground for 10 mins</Name>
+		<Completed>False</Completed>
+	</Task>
+	<Task id="EbUCGYouzC">
+		<Name>Workout for 15 mins</Name>
+		<Completed>False</Completed>
+	</Task>
+	<Task id="91DwkRiGVg">
+		<Name>Find at least 3 movies for tomorrow</Name>
+		<Completed>False</Completed>
+	</Task>
+	<Task id="awHQlREh3q">
+		<Name>Watch casino</Name>
+		<Completed>False</Completed>
+	</Task>
+	<Task id="P2Y1Fn5JLl">
+		<Name>Watch 101 dalmations</Name>
+		<Completed>False</Completed>
+	</Task>
+	<Task id="rBx3EAzUtu">
+		<Name>Page 3 (or 10 songs) to .xlsx</Name>
+		<Completed>False</Completed>
+	</Task>
+	<Task id="wSGtsuN5kw">
+		<Name>Start new playlist</Name>
+		<Completed>False</Completed>
+	</Task>
+	<Task id="75exLrrluc">
+		<Name>Rename footage to coincide</Name>
+		<Completed>False</Completed>
+	</Task>
+	<Task id="jhT7yV7k2Y">
+		<Name>Put footage on computer</Name>
+		<Completed>False</Completed>
+	</Task>
+	<Task id="8voYfoNwnx">
+		<Name>Record programming / lego star wars</Name>
+		<Completed>False</Completed>
+	</Task>
+	<Task id="v1hfiih1p9">
+		<Name>Put music on phone</Name>
+		<Completed>True</Completed>
+	</Task>
+	<Task id="daxPiw6DB9">
+		<Name>Edit the singles metadata</Name>
+		<Completed>True</Completed>
+	</Task>
+	<Task id="apnE5JjEaJ">
+		<Name>Watch vertigo</Name>
+		<Completed>True</Completed>
+	</Task>
+	<Task id="KOx5uKzG3Y">
+		<Name>Download all singles above 3.5 in the past week</Name>
+		<Completed>True</Completed>
+	</Task>
+</Tasks>

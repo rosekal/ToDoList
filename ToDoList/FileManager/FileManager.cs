@@ -18,7 +18,7 @@ namespace ToDoList {
             ValidateBackupFile();
 
             //Simply reading all lines from the backup file.
-            return ReadFromFile(BACKUP_DIRECTORY + BACKUP_FILE);
+            return ReadFromXMLFile(BACKUP_DIRECTORY + BACKUP_FILE);
         }
 
         internal void ValidateBackupFile() {
@@ -69,7 +69,7 @@ namespace ToDoList {
             }
         }
 
-        internal List<Task> ReadFromFile(string path) {
+        internal List<Task> ReadFromXMLFile(string path) {
             XmlDocument doc = new XmlDocument();
 
             try {
@@ -130,7 +130,7 @@ namespace ToDoList {
 
             if (openFile.ShowDialog() == DialogResult.OK) {
                 UserInput.currFile = Path.GetFileName(openFile.FileName);
-                return ReadFromFile(openFile.FileName);
+                return ReadFromXMLFile(openFile.FileName);
             }
 
             return null;

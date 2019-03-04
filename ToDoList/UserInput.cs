@@ -6,6 +6,7 @@ using System.IO;
 using System.Drawing;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using ToDoList.JSON;
 
 namespace ToDoList {
     public partial class UserInput : Form {
@@ -26,6 +27,8 @@ namespace ToDoList {
         public UserInput() {
             InitializeComponent();
             SetTitle(null);
+
+            string s = JSONHelper.GetMovies();
 
             fm = new FileManager();
 
@@ -263,8 +266,8 @@ namespace ToDoList {
                     AutoSize = true,
                 };
 
-                checkPanel.Enter += new EventHandler(chkbxPnl_Hover);
-                checkPanel.Leave += new EventHandler(chkbxPnl_Leave);
+                //checkPanel.Enter += new EventHandler(chkbxPnl_Hover);
+                //checkPanel.Leave += new EventHandler(chkbxPnl_Leave);
 
                 CheckBox check = new CheckBox {
                     Text = task.Name,
