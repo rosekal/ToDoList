@@ -414,6 +414,9 @@ namespace ToDoList {
             UpdateRecentFilesMenu(fm.GetRecentFiles());
 
             currFile = clickedText;
+
+            string[] currFileInfo = currFile.Split('\\');
+            SetTitle(currFileInfo[currFileInfo.Length -1]);
         }
 
         private void AutoFocusTextBox() {

@@ -61,21 +61,37 @@ namespace ToDoList {
 
             ValidateFile(BACKUP_DIRECTORY, "recent_files.txt");
 
-            List<string> currRecentFiles = File.ReadAllLines(recentFilesPath).ToList();
+            List<string> currRecentFiles = File.ReadAllLines(recentFilesPath).Distinct().ToList();
+
+            if (currRecentFiles.Contains(newFile)) {
+                for (int i = 0; i < currRecentFiles.Count; i++) {
+                    if (currRecentFiles[i] == newFile) {
+                        currRecentFiles.RemoveAt(i);
+                    }
+                }
+            }
 
             if (currRecentFiles.Count >= 5) {
-                currRecentFiles.RemoveAt(0);
-
-                File.WriteAllLines(recentFilesPath, currRecentFiles.ToArray());
+                currRecentFiles.RemoveAt(4);
             }
 
-            using (StreamWriter sw = File.AppendText($"{BACKUP_DIRECTORY}\\recent_files.txt")) {
-                sw.WriteLine(newFile);
-            }
+            currRecentFiles.Insert(0, newFile);
+
+            File.WriteAllLines(recentFilesPath, currRecentFiles.ToArray());
         }
 
         internal string[] GetRecentFiles() {
-            return File.ReadAllLines($"{BACKUP_DIRECTORY}\\recent_files.txt");
+            List<string> recentFiles = File.ReadAllLines($"{BACKUP_DIRECTORY}\\recent_files.txt").Distinct().ToList();
+
+            for(int i = 0; i < recentFiles.Count; i++){
+                string path = recentFiles[i];
+
+                if (!File.Exists(path)) {
+                    recentFiles.Remove(path);
+                }
+            }
+
+            return recentFiles.ToArray();
         }
 
         internal void WriteToTDLFile(string path, List<Task> data) {
