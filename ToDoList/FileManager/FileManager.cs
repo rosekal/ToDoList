@@ -18,19 +18,23 @@ namespace ToDoList {
             ValidateBackupFile();
 
             //Simply reading all lines from the backup file.
-            return ReadFromXMLFile(BACKUP_DIRECTORY + BACKUP_FILE);
+            return ReadFromTDLFile(BACKUP_DIRECTORY + BACKUP_FILE);
         }
 
-        internal void ValidateBackupFile() {
+        internal void ValidateFile(string dir, string file) {
             //If the backup directory doesn't exist, create one.
-            if (!Directory.Exists(BACKUP_DIRECTORY)) {
-                Directory.CreateDirectory(BACKUP_DIRECTORY);
+            if (!Directory.Exists(dir)) {
+                Directory.CreateDirectory(dir);
             }
 
             //If the backup file doesn't exist, create one.
-            if (!File.Exists(BACKUP_DIRECTORY + BACKUP_FILE)) {
-                File.Create(BACKUP_DIRECTORY + BACKUP_FILE).Close();
+            if (!File.Exists(dir + file)) {
+                File.Create(dir + file).Close();
             }
+        }
+
+        internal void ValidateBackupFile() {
+            ValidateFile(BACKUP_DIRECTORY, BACKUP_FILE);
 
             //If backup file is corrupted/new, re-write it
             XmlDocument doc = new XmlDocument();
@@ -49,10 +53,28 @@ namespace ToDoList {
             ValidateBackupFile();
 
             //Writing to the backup file
-            WriteToFile(BACKUP_DIRECTORY + BACKUP_FILE, data);
+            WriteToTDLFile(BACKUP_DIRECTORY + BACKUP_FILE, data);
         }
 
-        internal void WriteToFile(string path, List<Task> data) {
+        internal void UpdateRecentTDLFile(string newFile) {
+            string recentFilesPath = $"{BACKUP_DIRECTORY}\\recent_files.txt";
+
+            ValidateFile(BACKUP_DIRECTORY, "recent_files.txt");
+
+            List<string> currRecentFiles = File.ReadAllLines(recentFilesPath).ToList();
+
+            if (currRecentFiles.Count >= 5) {
+                currRecentFiles.RemoveAt(0);
+
+                File.WriteAllLines(recentFilesPath, currRecentFiles.ToArray());
+            }
+
+            using (StreamWriter sw = File.AppendText($"{BACKUP_DIRECTORY}\\recent_files.txt")) {
+                sw.WriteLine(newFile);
+            }
+        }
+
+            internal void WriteToTDLFile(string path, List<Task> data) {
             using (StreamWriter sw = new StreamWriter(path)) {
                 sw.WriteLine("<Tasks>");
 
@@ -69,7 +91,7 @@ namespace ToDoList {
             }
         }
 
-        internal List<Task> ReadFromXMLFile(string path) {
+        internal List<Task> ReadFromTDLFile(string path) {
             XmlDocument doc = new XmlDocument();
 
             try {
@@ -112,8 +134,9 @@ namespace ToDoList {
             };
 
             if (saveFile.ShowDialog() == DialogResult.OK) {
-                WriteToFile(saveFile.FileName, toDoList);
+                WriteToTDLFile(saveFile.FileName, toDoList);
                 UserInput.currFile = Path.GetFileName(saveFile.FileName);
+                UpdateRecentTDLFile(saveFile.FileName);
 
                 return saveFile.FileName;
             }
@@ -130,7 +153,9 @@ namespace ToDoList {
 
             if (openFile.ShowDialog() == DialogResult.OK) {
                 UserInput.currFile = Path.GetFileName(openFile.FileName);
-                return ReadFromXMLFile(openFile.FileName);
+                UpdateRecentTDLFile(openFile.FileName);
+
+                return ReadFromTDLFile(openFile.FileName);
             }
 
             return null;

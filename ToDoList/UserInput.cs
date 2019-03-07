@@ -369,7 +369,7 @@ namespace ToDoList {
             if (currFile.Equals("")) {
                 SaveNewFile();
             } else {
-                fm.WriteToFile(currFile, toDoList);
+                fm.WriteToTDLFile(currFile, toDoList);
             }
         }
 
