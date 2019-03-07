@@ -56,7 +56,7 @@ namespace ToDoList {
             WriteToTDLFile(BACKUP_DIRECTORY + BACKUP_FILE, data);
         }
 
-        internal void UpdateRecentTDLFile(string newFile) {
+        private void UpdateRecentTDLFile(string newFile) {
             string recentFilesPath = $"{BACKUP_DIRECTORY}\\recent_files.txt";
 
             ValidateFile(BACKUP_DIRECTORY, "recent_files.txt");
@@ -74,7 +74,11 @@ namespace ToDoList {
             }
         }
 
-            internal void WriteToTDLFile(string path, List<Task> data) {
+        internal string[] GetRecentFiles() {
+            return File.ReadAllLines($"{BACKUP_DIRECTORY}\\recent_files.txt");
+        }
+
+        internal void WriteToTDLFile(string path, List<Task> data) {
             using (StreamWriter sw = new StreamWriter(path)) {
                 sw.WriteLine("<Tasks>");
 

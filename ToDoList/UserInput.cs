@@ -41,6 +41,8 @@ namespace ToDoList {
 
             AutoFocusTextBox();
 
+            UpdateRecentFilesMenu(fm.GetRecentFiles());
+
             //Backup to the file every 5 minutes
             var t = new System.Threading.Timer(o => fm.BackUpFile(toDoList), null, 10000, 10000);
         }
@@ -363,6 +365,8 @@ namespace ToDoList {
         private void SaveNewFile() {
             fm.SaveNewFile(toDoList);
             SetTitle(currFile);
+
+            UpdateRecentFilesMenu(fm.GetRecentFiles());
         }
 
         private void SaveCurrentFile() {
@@ -380,6 +384,16 @@ namespace ToDoList {
                 toDoList = results;
                 SetTitle(currFile);
                 PopulateToDoList();
+            }
+
+            UpdateRecentFilesMenu(fm.GetRecentFiles());
+        }
+
+        private void UpdateRecentFilesMenu(string[] files) {
+            recentToolStripMenuItem.DropDownItems.Clear();
+
+            foreach(string file in files) {
+                recentToolStripMenuItem.DropDownItems.Add(file);
             }
         }
 
