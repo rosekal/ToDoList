@@ -35,14 +35,15 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToDoListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbxList = new System.Windows.Forms.GroupBox();
             this.chkAll = new System.Windows.Forms.CheckBox();
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.recentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.gbxList.SuspendLayout();
             this.SuspendLayout();
@@ -65,6 +66,7 @@
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.loadToolStripMenuItem,
+            this.recentToolStripMenuItem,
             this.printToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -97,6 +99,13 @@
             this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadToolStripMenuItem.Text = "Open";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
+            // printToolStripMenuItem
+            // 
+            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.printToolStripMenuItem.Text = "Print";
+            this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -141,13 +150,6 @@
             this.mainPanel.Size = new System.Drawing.Size(419, 77);
             this.mainPanel.TabIndex = 0;
             // 
-            // printToolStripMenuItem
-            // 
-            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.printToolStripMenuItem.Text = "Print";
-            this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
-            // 
             // printDocument1
             // 
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
@@ -163,6 +165,12 @@
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
+            // recentToolStripMenuItem
+            // 
+            this.recentToolStripMenuItem.Name = "recentToolStripMenuItem";
+            this.recentToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.recentToolStripMenuItem.Text = "Recent";
+            // 
             // UserInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -172,7 +180,7 @@
             this.Controls.Add(this.gbxList);
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(0, 700);
+            this.MinimumSize = new System.Drawing.Size(16, 700);
             this.Name = "UserInput";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserInput_FormClosing);
@@ -201,6 +209,7 @@
         private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Windows.Forms.ToolStripMenuItem recentToolStripMenuItem;
     }
 }
 

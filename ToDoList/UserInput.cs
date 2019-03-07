@@ -41,6 +41,9 @@ namespace ToDoList {
 
             AutoFocusTextBox();
 
+            recentToolStripMenuItem.DropDownItemClicked += new ToolStripItemClickedEventHandler(RecentFileSelected);
+            UpdateRecentFilesMenu(fm.GetRecentFiles());
+
             //Backup to the file every 5 minutes
             var t = new System.Threading.Timer(o => fm.BackUpFile(toDoList), null, 10000, 10000);
         }
@@ -363,13 +366,15 @@ namespace ToDoList {
         private void SaveNewFile() {
             fm.SaveNewFile(toDoList);
             SetTitle(currFile);
+
+            UpdateRecentFilesMenu(fm.GetRecentFiles());
         }
 
         private void SaveCurrentFile() {
             if (currFile.Equals("")) {
                 SaveNewFile();
             } else {
-                fm.WriteToFile(currFile, toDoList);
+                fm.WriteToTDLFile(currFile, toDoList);
             }
         }
 
@@ -381,6 +386,37 @@ namespace ToDoList {
                 SetTitle(currFile);
                 PopulateToDoList();
             }
+
+            UpdateRecentFilesMenu(fm.GetRecentFiles());
+        }
+
+        private void UpdateRecentFilesMenu(string[] files) {
+            recentToolStripMenuItem.DropDownItems.Clear();
+
+            foreach (string file in files) {
+                recentToolStripMenuItem.DropDownItems.Add(file);
+            }
+        }
+
+        private void RecentFileSelected(object sender, ToolStripItemClickedEventArgs e) {
+            string clickedText = e.ClickedItem.Text;
+
+            var results = fm.ReadFromTDLFile(clickedText);
+
+            if (results != null) {
+                toDoList = results;
+                SetTitle(currFile);
+                PopulateToDoList();
+            }
+
+            fm.UpdateRecentTDLFile(clickedText);
+
+            UpdateRecentFilesMenu(fm.GetRecentFiles());
+
+            currFile = clickedText;
+
+            string[] currFileInfo = currFile.Split('\\');
+            SetTitle(currFileInfo[currFileInfo.Length -1]);
         }
 
         private void AutoFocusTextBox() {
