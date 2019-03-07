@@ -56,7 +56,7 @@ namespace ToDoList {
             WriteToTDLFile(BACKUP_DIRECTORY + BACKUP_FILE, data);
         }
 
-        private void UpdateRecentTDLFile(string newFile) {
+        internal void UpdateRecentTDLFile(string newFile) {
             string recentFilesPath = $"{BACKUP_DIRECTORY}\\recent_files.txt";
 
             ValidateFile(BACKUP_DIRECTORY, "recent_files.txt");

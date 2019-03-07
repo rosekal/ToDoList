@@ -41,6 +41,7 @@ namespace ToDoList {
 
             AutoFocusTextBox();
 
+            recentToolStripMenuItem.DropDownItemClicked += new ToolStripItemClickedEventHandler(RecentFileSelected);
             UpdateRecentFilesMenu(fm.GetRecentFiles());
 
             //Backup to the file every 5 minutes
@@ -392,9 +393,27 @@ namespace ToDoList {
         private void UpdateRecentFilesMenu(string[] files) {
             recentToolStripMenuItem.DropDownItems.Clear();
 
-            foreach(string file in files) {
+            foreach (string file in files) {
                 recentToolStripMenuItem.DropDownItems.Add(file);
             }
+        }
+
+        private void RecentFileSelected(object sender, ToolStripItemClickedEventArgs e) {
+            string clickedText = e.ClickedItem.Text;
+
+            var results = fm.ReadFromTDLFile(clickedText);
+
+            if (results != null) {
+                toDoList = results;
+                SetTitle(currFile);
+                PopulateToDoList();
+            }
+
+            fm.UpdateRecentTDLFile(clickedText);
+
+            UpdateRecentFilesMenu(fm.GetRecentFiles());
+
+            currFile = clickedText;
         }
 
         private void AutoFocusTextBox() {
