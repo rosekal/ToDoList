@@ -436,7 +436,7 @@ namespace ToDoList {
         }
 
 		private void UserInput_Resize(object sender, EventArgs e) {
-			mainPanel.Height = this.Height - 130;
+			mainPanel.Height = this.Height - 131;
 		}
 
 		private void PrintList() {
