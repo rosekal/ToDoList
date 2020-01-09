@@ -24,14 +24,17 @@ namespace ToDoList {
 
         private static string AppName = ConfigurationManager.AppSettings["AppName"];
 
-        public UserInput() {
+        public UserInput(String[] args) {
             InitializeComponent();
             SetTitle(null);
 
             fm = new FileManager();
 
-            toDoList = fm.RestoreBackup();
-
+			if (args != null && args.Length > 0) {
+				toDoList = fm.ReadFromTDLFile(args[0]);
+			} else {
+				toDoList = fm.RestoreBackup();
+			}
 
             CreateInputWidgets();
 

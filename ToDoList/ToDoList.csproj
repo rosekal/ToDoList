@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="FileManager\FileManager.cs" />
     <Compile Include="JSON\JSONHelper.cs" />
-    <Compile Include="Movie\Movie.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="UserInput.cs">
       <SubType>Form</SubType>
