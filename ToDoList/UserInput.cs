@@ -28,7 +28,7 @@ namespace ToDoList {
             InitializeComponent();
             SetTitle(null);
 
-            fm = new FileManager();
+			fm = new FileManager();
 
 			if (args != null && args.Length > 0) {
 				toDoList = fm.ReadFromTDLFile(args[0]);
