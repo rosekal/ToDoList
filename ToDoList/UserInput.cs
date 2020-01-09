@@ -28,8 +28,6 @@ namespace ToDoList {
             InitializeComponent();
             SetTitle(null);
 
-            string s = JSONHelper.GetMovies();
-
             fm = new FileManager();
 
             toDoList = fm.RestoreBackup();
@@ -121,7 +119,14 @@ namespace ToDoList {
                 }
 
                 PopulateToDoList();
-            }
+            }else if(me.Button == MouseButtons.Middle) {
+				CheckBox chkbx = (CheckBox)sender;
+				for (int i = 0; i < toDoList.Count; i++) {
+					if (toDoList[i].Id.Equals(chkbx.Tag)) {
+						toDoList.Remove(toDoList[i]);
+					}
+				}
+			}
         }
 
         bool entered = false;
@@ -268,9 +273,7 @@ namespace ToDoList {
                     Width = 100,
                     AutoSize = true,
                 };
-
-                //checkPanel.Enter += new EventHandler(chkbxPnl_Hover);
-                //checkPanel.Leave += new EventHandler(chkbxPnl_Leave);
+				
 
                 CheckBox check = new CheckBox {
                     Text = task.Name,

@@ -1,10 +1,10 @@
 C:\Users\Kalen\source\repos\ToDoList\ToDoList\bin\Debug\ToDoList.exe.config
 C:\Users\Kalen\source\repos\ToDoList\ToDoList\bin\Debug\ToDoList.exe
 C:\Users\Kalen\source\repos\ToDoList\ToDoList\bin\Debug\ToDoList.pdb
-C:\Users\Kalen\source\repos\ToDoList\ToDoList\obj\Debug\ToDoList.csprojResolveAssemblyReference.cache
 C:\Users\Kalen\source\repos\ToDoList\ToDoList\obj\Debug\ToDoList.UserInput.resources
 C:\Users\Kalen\source\repos\ToDoList\ToDoList\obj\Debug\ToDoList.Properties.Resources.resources
 C:\Users\Kalen\source\repos\ToDoList\ToDoList\obj\Debug\ToDoList.csproj.GenerateResource.Cache
 C:\Users\Kalen\source\repos\ToDoList\ToDoList\obj\Debug\ToDoList.csproj.CoreCompileInputs.cache
 C:\Users\Kalen\source\repos\ToDoList\ToDoList\obj\Debug\ToDoList.exe
 C:\Users\Kalen\source\repos\ToDoList\ToDoList\obj\Debug\ToDoList.pdb
+C:\Users\Kalen\source\repos\ToDoList\ToDoList\obj\Debug\ToDoList.csprojAssemblyReference.cache

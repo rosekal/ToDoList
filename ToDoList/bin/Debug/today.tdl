@@ -1,58 +1,38 @@
 <Tasks>
-	<Task id="yHAi4i4wF1">
-		<Name>Lay on ground for 10 mins</Name>
+	<Task id="TE6ux61xzJ">
+		<Name>Wrote review on DOTEOT</Name>
 		<Completed>False</Completed>
 	</Task>
-	<Task id="EbUCGYouzC">
-		<Name>Workout for 15 mins</Name>
+	<Task id="paeu7liuXG">
+		<Name>Listened to RATM</Name>
 		<Completed>False</Completed>
 	</Task>
-	<Task id="91DwkRiGVg">
-		<Name>Find at least 3 movies for tomorrow</Name>
+	<Task id="3bPjawKjWo">
+		<Name>Listened to FM Time</Name>
 		<Completed>False</Completed>
 	</Task>
-	<Task id="awHQlREh3q">
-		<Name>Watch casino</Name>
+	<Task id="3tbsCUzpjx">
+		<Name>Sat outside for a bit</Name>
 		<Completed>False</Completed>
 	</Task>
-	<Task id="P2Y1Fn5JLl">
-		<Name>Watch 101 dalmations</Name>
+	<Task id="U7oSRICG45">
+		<Name>Download & edit metadata of albums</Name>
 		<Completed>False</Completed>
 	</Task>
-	<Task id="rBx3EAzUtu">
-		<Name>Page 3 (or 10 songs) to .xlsx</Name>
+	<Task id="O4LWHP4Cw9">
+		<Name>Added van halen to the sort albums</Name>
 		<Completed>False</Completed>
 	</Task>
-	<Task id="wSGtsuN5kw">
-		<Name>Start new playlist</Name>
+	<Task id="J5TQ1cEVc2">
+		<Name>Wrote script to reduce mp3 size</Name>
 		<Completed>False</Completed>
 	</Task>
-	<Task id="75exLrrluc">
-		<Name>Rename footage to coincide</Name>
+	<Task id="x7Oo5G3bzo">
+		<Name>Started running reduce mp3 size script on entire music catalogue</Name>
 		<Completed>False</Completed>
 	</Task>
-	<Task id="jhT7yV7k2Y">
-		<Name>Put footage on computer</Name>
+	<Task id="2xBHKZnXB3">
+		<Name>Put good to go music to my phone</Name>
 		<Completed>False</Completed>
-	</Task>
-	<Task id="8voYfoNwnx">
-		<Name>Record programming / lego star wars</Name>
-		<Completed>False</Completed>
-	</Task>
-	<Task id="v1hfiih1p9">
-		<Name>Put music on phone</Name>
-		<Completed>True</Completed>
-	</Task>
-	<Task id="daxPiw6DB9">
-		<Name>Edit the singles metadata</Name>
-		<Completed>True</Completed>
-	</Task>
-	<Task id="apnE5JjEaJ">
-		<Name>Watch vertigo</Name>
-		<Completed>True</Completed>
-	</Task>
-	<Task id="KOx5uKzG3Y">
-		<Name>Download all singles above 3.5 in the past week</Name>
-		<Completed>True</Completed>
 	</Task>
 </Tasks>
