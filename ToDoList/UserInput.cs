@@ -291,7 +291,7 @@ namespace ToDoList {
                 check.CheckStateChanged += new EventHandler(chkbx_CheckStateChanged);
                 check.MouseDown += new MouseEventHandler(chkbx_Clicked);
 
-                if (mainPanel.Height < 500 && mainPanel.Height < checkPanel.Location.Y + 70) {
+                if (mainPanel.Height < 1000 && mainPanel.Height < checkPanel.Location.Y + 70) {
                     mainPanel.Height += 30;
                     gbxList.Height += 30;
                 }
@@ -435,7 +435,11 @@ namespace ToDoList {
             e.Graphics.DrawImage(bmp, 0, 0);
         }
 
-        private void PrintList() {
+		private void UserInput_Resize(object sender, EventArgs e) {
+			mainPanel.Height = this.Height - 130;
+		}
+
+		private void PrintList() {
             Graphics g = this.CreateGraphics();
             bmp = new Bitmap(gbxList.Size.Width - 15, gbxList.Size.Height -100, g);
 

@@ -181,11 +181,12 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
 			this.MainMenuStrip = this.menuStrip1;
-			this.MinimumSize = new System.Drawing.Size(16, 700);
+			this.MinimumSize = new System.Drawing.Size(500, 200);
 			this.Name = "UserInput";
 			this.Text = "Form1";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserInput_FormClosing);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserInput_KeyDown);
+			this.Resize += new System.EventHandler(this.UserInput_Resize);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.gbxList.ResumeLayout(false);
